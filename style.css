@@ -89,7 +89,7 @@ h2, h3 {
 }
 
 #portfolio li {
-  background: #000000;
+  background:  rgb(86, 104, 109);
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -99,9 +99,10 @@ h2, h3 {
   background: #000000;
 }
 
+/*This is the portfolio TEXT. THE LIST TEXT!!*/
 #portfolio a {
   text-decoration: none;
-  color: #000000;
+  color: white;
 }
 
 .games {
