@@ -59,9 +59,22 @@ $(function () {
 
     createPlatform(300, 305, 50, 500, "black"); //wall test //Wall #1
 
-    createPlatform(500, 0, 50, 500, "black"); //wall test //Wall #2 
+    createPlatform(500, 0, 50, 550, "black"); //wall test //Wall #2 
 
     //Next, make a horizontal roof for the second wall. It will go on the side. This will create a mini forced cave.
+
+    createPlatform(550, 500, 550, 50, "black"); //wall test //Wall #2 
+
+    //Moar platforms. This time, they are on top of the cave wall. If you fall in between two pillars, you are already dead.
+        
+    createPlatform(580, 290, 50, 240, "black"); //First platform, will copy and paste. WILL become smaller. I think.
+
+    createPlatform(690, 290, 130, 240, "black"); //Second platform, will copy and paste.
+
+    createPlatform(890, 290, 130, 240, "black"); //Third platform, will copy and paste.
+
+
+
 
 
 
@@ -72,6 +85,13 @@ $(function () {
     createCollectable("steve", 350, 500);
 
     createCollectable("diamond", 450, 200);
+
+    //FINAL COLLECTABLE! TO END THE GAME.
+
+    createCollectable("max", 585, 245);
+
+
+
 
 
 
