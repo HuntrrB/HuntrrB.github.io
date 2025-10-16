@@ -51,14 +51,16 @@
         });
 
         // Every 50 milliseconds, call the update Function (see below)
-        setInterval(update, 50);
+        var interval = setInterval(update, 50);
 
         // Every time the box is clicked, call the handleBoxClick Function (see below)
         box.on("click", handleBoxClick);
+        background.on("click", misclicks++);
 
         // moves the Box to a new position on the screen along the X-Axis
-        function moveBoxTo(newPositionX) {
+        function moveBoxTo(newPositionX, newPositionY) {
           box.css("left", newPositionX);
+          box.css("top", newPositionY);
         }
 
         // changes the text displayed on the Box
@@ -74,6 +76,12 @@
         var positionX = 0;
         var points = 0;
         var speed = 10;
+        var positionY = 0;
+        var speedY = 0;
+        var boardHeight = jQuery(window).height();
+        var misclicks = 0;
+
+
 
 
 
@@ -84,16 +92,31 @@
          * If the box drifts off the screen, turn it around!
          */
         function update() {
-          moveBoxTo(positionX); //Moves box to Xpos 200.
+          moveBoxTo(positionX, positionY); //Moves box to Xpos 200.
           positionX += speed;
+          positionY += speedY;
 
           //The fancy if statement. Will make the box NOT go off screen!
+
+          //Going to the RIGHT. The less than zero is going to the LEFT. 
+          //I will try to make the one going to the LEFT face the LEFT. SOMEHOW.
         
           if (positionX > boardWidth) {
             speed *= -1;
+            box.css("transform", "scaleX(-1)");
           } 
           else if (positionX < 0) {
             speed *= -1;
+            box.css("transform", "scaleX(1)");
+
+
+          }
+
+          if (positionY > boardHeight) {
+            speedY *= -1;
+          } 
+          else if (positionY <0) {
+            speedY *= -1;
           }
           
 
@@ -110,15 +133,31 @@
          * - move the box to the left side of the screen.
          */
         function handleBoxClick() {
-          positionX = 0;
+          misclicks -= 1;
+        box.css("transform", "scaleX(1)");
+        var randNum = Math.random() * 1000;
+          positionX = randNum;
           changeBoxText(points);
           points++;
           speed = 3 * points + 10;
 
+          positionY = 0;
+          speedY= 3 * points + 10;
+                 
+      
 
 
 
         }
+
+        //Kills the game when you misclick too much. Lowkey this might get me cause I miss a bunch oh lord.
+        function endGame() {
+  clearInterval(interval);
+}
+
+if (misclicks > 20) {
+  endGame;
+}
 
 
         
