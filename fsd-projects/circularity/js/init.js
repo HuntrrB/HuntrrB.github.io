@@ -24,6 +24,8 @@ var init = function (window) {
         var circle; //var to store and hold ONE circle when creating a circle.
         var circles = []; //var to store all circles in an array/list
 
+       
+
 
 
         // TODO 2 : Create a function that draws a circle 
@@ -35,6 +37,8 @@ var init = function (window) {
             view.addChild(circle);
 
             circles.push(circle);
+
+            console.log(circle);
         }
         
 
@@ -86,6 +90,8 @@ var init = function (window) {
 //game.checkCirclePosition(circles[2]);
 //game.checkCirclePosition(circles[3]);
 //game.checkCirclePosition(circles[4]);
+
+
            
 
             // TODO 8 / TODO 9 : Iterate over the array
@@ -127,6 +133,30 @@ var init = function (window) {
 
 
             // YOUR TODO 6 CODE ENDS HERE //////////////////////////
+        }
+
+        //Detection function?
+
+        function circleDetection() {
+             //Collision detection
+        var circle1 = circles[i];
+
+var circle2 = circles[j]; // i and j would be different
+
+ 
+
+if (circle1.x + circle1.radius < circle2.x - circle2.radius && circle1.y + circle1.radius < circle2.y - circle2.radius && circle2.x + circle2.radius < circle1.x - circle1.radius && circle2.y + circle2.radius < circle1.y - circle1.radius){
+circle1.velocityX *= -1;
+
+circle1.velocityX *= -1;
+
+
+
+
+
+  
+
+}
         }
         
         /////////////////////////////////////////////////////////////
