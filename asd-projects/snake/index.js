@@ -14,9 +14,10 @@ var score = 0; // variable to keep track of the score
 var started = false; // variable to keep track of whether the game has started
 
 // TODO 4, Part 1: Create the apple variable
-
+var apple = {};
 
 // TODO 5, Part 1: Create the snake variable
+const snake = {};
 
 
 // Constant Variables
@@ -48,12 +49,24 @@ init();
 
 function init() {
   // TODO 5, Part 2: initialize the snake
+
+  snake.body = []; //Empty body.
+
+  makeSnakeSquare(10, 10); //Creates the first square in the mid of the board.
+  makeSnakeSquare(10, 9); //Create a second square to the left of the first.
+  makeSnakeSquare(10, 8); //Create a third square to the left of the second.
+
+  //Marking the head. The starting is obviously the head. So index 0.
+
+  snake.head = snake.body[0];
   
   
   // TODO 4, Part 3: initialize the apple
-
+makeApple();
 
   // TODO 6, Part 1: Initialize the interval
+
+  updateInterval = setInterval(update, 100);
 
 
 }
@@ -68,6 +81,20 @@ function init() {
  */
 function update() {
   // TODO 6, Part 2: Fill in the update function's code block
+
+  if (started) {
+    moveSnake();
+  };
+
+  if (hasHitWall() || hasCollidedWithSnake()) {
+    endGame();
+  };
+
+  if (hasCollidedWithApple()) {
+    handleAppleCollision();
+  };
+
+  // console.log("updating...");
 
 
 
@@ -84,11 +111,20 @@ function checkForNewDirection(event) {
 
   if (activeKey === KEY.LEFT) {
     snake.head.direction = "left";
-  }
+  } else if (activeKey === KEY.RIGHT) {
+    snake.head.direction = "right";
+  } else if (activeKey === KEY.UP) {
+    snake.head.direction = "up";
+  } else if (activeKey === KEY.DOWN) {
+    snake.head.direction = "down";
+  };
+
+
+
 
   // FILL IN THE REST
 
-  // console.log(snake.head.direction);     // uncomment me!
+  console.log("Snake DIR: ", snake.head.direction);     // uncomment me!
 }
 
 function moveSnake() {
@@ -114,9 +150,21 @@ function moveSnake() {
     HINT: The snake's head will need to move forward 1 square based on the value
     of snake.head.direction which may be one of "left", "right", "up", or "down"
   */
+//This decreases the column number by 1, moving the head a square to the left.
+//Columns increase from left 2 right.
+
+    if (snake.head.direction === "left") {
+      snake.head.column = snake.head.column - 1;
+    } else  if (snake.head.direction === "right") {
+      snake.head.column = snake.head.column + 1;
+    }  else if (snake.head.direction === "up") {
+      snake.head.row = snake.head.row - 1;
+    } else   if (snake.head.direction === "down") {
+      snake.head.row = snake.head.row + 1;
+    };
 
 
-
+repositionSquare(snake.head);
 
 }
 
@@ -208,6 +256,18 @@ function endGame() {
 function makeApple() {
   // TODO 4, Part 2: Fill in this function's code block
 
+  // make the apple jQuery Object and append it to the board
+apple.element = $("<div>").addClass("apple").appendTo(board);
+
+// get a random available row/column on the board
+var randomPosition = getRandomAvailablePosition();
+
+// initialize the row/column properties on the Apple Object
+apple.row = randomPosition.row;
+apple.column = randomPosition.column;
+
+// position the apple on the screen
+repositionSquare(apple);
 
 
 }
@@ -219,6 +279,30 @@ function makeApple() {
 function makeSnakeSquare(row, column) {
   // TODO 5, Part 2: Fill in this function's code block
 
+  // Initialize a new snakeSquare obj.
+
+  const snakeSquare = {};
+
+  //Make the snakeSquare element and add it to the board.
+  snakeSquare.element = $("<div>").addClass("snake").appendTo(board);
+
+  //Assign the row and col pos.
+
+  snakeSquare.row = row;
+  snakeSquare.column = column;
+
+  //Set the snake's pos visually.
+  repositionSquare(snakeSquare);
+
+  //If this is the head, give it a special ID.
+
+  if (snake.body.length === 0) {
+    snakeSquare.element.attr("id", "snake-head");
+  }
+
+  //Add the square to the snake's bod and update the tail.
+  snake.body.push(snakeSquare);
+  snake.tail = snakeSquare;
 
 
 
@@ -237,7 +321,8 @@ function makeSnakeSquare(row, column) {
 */
 function handleKeyDown(event) {
   // TODO 7: make the handleKeyDown function register which key is pressed
-
+activeKey = event.which;
+console.log(activeKey);
 
   // If a valid direction key is pressed, start the game
   if (
