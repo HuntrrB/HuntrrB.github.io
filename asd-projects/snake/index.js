@@ -170,6 +170,13 @@ repositionSquare(snake.head);
 
 // TODO 9: Create a new helper function
 
+function moveBodyAToBodyB (bodyA, bodyB) {
+var bodyA = {row: 5, column: 5, direction: "right"};
+var bodyB = {row: 6, column: 5, direction: "down"};
+console.log(`before moving, body A: ${JSON.stringify(bodyA)}`); // Should log: { row: 5, column: 5, direction: "right" }
+moveBodyAToBodyB(bodyA, bodyB);
+console.log(`after moving, body A: ${JSON.stringify(bodyA)}`); // Should log: { row: 6, column: 5, direction: "down" } || Note the match with bodyB
+};
 
 
 
