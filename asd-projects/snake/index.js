@@ -213,11 +213,11 @@ function hasHitWall() {
     HINT: What will the row and column of the snake's head be if this were the case?
   */
 
-    if (snake.head.row < 0 || snake.head.row >= ROWS - 1) {
+    if (snake.head.row < 0 || snake.head.row >= ROWS + 1) {
       endGame();
     };
 
-     if (snake.head.column < 0 || snake.head.column >= COLUMNS - 1) {
+     if (snake.head.column < 0 || snake.head.column >= COLUMNS + 1) {
       endGame();
     };
 
@@ -420,7 +420,29 @@ function getRandomAvailablePosition() {
       TODO 14: After generating the random position determine if that position is
       not occupied by a snakeSquare in the snake's body. If it is then set 
       spaceIsAvailable to false so that a new position is generated.
+    
+REFERENCE CODE, WILL DELETE AFTER
+       if (snake.head.row < 0 || snake.head.row >= ROWS - 1) {
+      endGame();
+    };
+
+     if (snake.head.column < 0 || snake.head.column >= COLUMNS - 1) {
+      endGame();
+    };
+
+
+    return false;
+REFERENCE CODE, WILL DELETE AFTER
     */
+
+for (var i = 0; i < snake.body.length; i++) {
+  if (randomPosition.column === snake.body[i].column) {
+    spaceIsAvailable = false;
+  } else  if (randomPosition.row === snake.body[i].row) {
+    spaceIsAvailable = false;
+  }
+}
+
 
 
 
