@@ -125,6 +125,22 @@ function checkForNewDirection(event) {
   // FILL IN THE REST
 
   console.log("Snake DIR: ", snake.head.direction);     // uncomment me!
+
+  // Debug stuf:
+  //Pos debug
+  // console.log("Snake head at:", snake.head.row, snake.head.column);
+  // console.log("Apple at:", apple.row, apple.column);
+
+  // //Dir debug
+  // console.log("Snake direction:", snake.head.direction);
+  // console.log("Active key pressed:", activeKey);
+
+  // //Collision deubg
+  // console.log("Hit wall?", hasHitWall());
+  // console.log("Hit apple?", hasCollidedWithApple());
+
+
+  
 }
 
 function moveSnake() {
@@ -136,6 +152,17 @@ function moveSnake() {
     stored in the Array snake.body and each part knows its current 
     column/row properties. 
   */
+
+    for (var i = snake.body.length - 1; i > 0 ; i--) {
+      var currentSnakeSquare = snake.body[i];
+      var snakeSquareInFront = snake.body[i - 1];
+    
+
+    moveBodyAToBodyB(currentSnakeSquare, snakeSquareInFront);
+
+    repositionSquare(currentSnakeSquare);
+
+};
 
 
 
@@ -171,13 +198,10 @@ repositionSquare(snake.head);
 // TODO 9: Create a new helper function
 
 function moveBodyAToBodyB (bodyA, bodyB) {
-var bodyA = {row: 5, column: 5, direction: "right"};
-var bodyB = {row: 6, column: 5, direction: "down"};
-console.log(`before moving, body A: ${JSON.stringify(bodyA)}`); // Should log: { row: 5, column: 5, direction: "right" }
-moveBodyAToBodyB(bodyA, bodyB);
-console.log(`after moving, body A: ${JSON.stringify(bodyA)}`); // Should log: { row: 6, column: 5, direction: "down" } || Note the match with bodyB
+  bodyA.row = bodyB.row;
+  bodyA.column = bodyB.column;
+  bodyA.direction = bodyB.direction;
 };
-
 
 
 
@@ -189,9 +213,22 @@ function hasHitWall() {
     HINT: What will the row and column of the snake's head be if this were the case?
   */
 
+    if (snake.head.row < 0 || snake.head.row >= ROWS - 1) {
+      endGame();
+    };
+
+     if (snake.head.column < 0 || snake.head.column >= COLUMNS - 1) {
+      endGame();
+    };
 
 
-  return false;
+    return false;
+    
+
+
+
+
+  
 }
 
 function hasCollidedWithApple() {
@@ -202,10 +239,14 @@ function hasCollidedWithApple() {
     HINT: Both the apple and the snake's head are aware of their own row and column
   */
 
+    if (snake.head.row === apple.row && snake.head.column === apple.column) {
+      return true;
+    };
+
 
 
   return false;
-}
+};
 
 function handleAppleCollision() {
   // increase the score and update the score DOM element
@@ -231,9 +272,15 @@ function hasCollidedWithSnake() {
     head and each part of the snake's body also knows its own row and column.
   */
 
+    for (var i = 1; i < snake.body.length; i++) {
+      if (snake.head.row === snake.body[i].row && snake.head.column === snake.body[i].column ) {
+        return true;
+      };
+    };
 
 
-  return false;
+return false;
+  
 }
 
 function endGame() {
