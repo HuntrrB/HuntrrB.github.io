@@ -20,7 +20,15 @@ function resetAndRender() {
 // all of your apply functions
 function applyAndRender() {
   // Multiple TODOs: Call your apply function(s) here
-applyFilter();
+applyFilter(increaseGreenByBlue);
+applyFilterNoBackground(reddify);
+applyFilterNoBackground(decreasedBlue);
+applyFilter(reddify);
+applyFilterNoBackground(increaseGreenByBlue);
+applyFilter(increaseGreenByBlue);
+applyFilterNoBackground(decreasedBlue);
+applyFilterNoBackground(decreasedBlue);
+
   
 
   // do not change the below line of code
@@ -33,40 +41,89 @@ applyFilter();
 
 // TODO 1, 2, 3 & 5: Create the applyFilter function here
 
-function applyFilter() {
+function applyFilter(filterFunction) {
   for (var i = 0; i < image.length; i++){
   let t = [];
   for (var j = 0; j < image[i].length; j++){
     var pixel = image[i][j];
+    //console.log(typeof pixel);
 
     var pixelArray = rgbStringToArray(pixel);
+    console.log(pixelArray, pixel)
+    filterFunction(pixelArray); //So this will replace filterFunc with reddify! Cus same text!
+    // pixelArray[RED] = 100;
 
     var updatedPixel = rgbArrayToString(pixelArray);
 
     image[i][j] = updatedPixel;
     // This is where I’ll modify the color values later
 
-    const RED = 0;
-    const GREEN = 1;
-    const BLUE = 2;
+   
     t.push(image[i][j]);
     console.log(image[i][j]);
   }
-  og.push(t);
 }
 };
 
 
 // TODO 9 Create the applyFilterNoBackground function
+function applyFilterNoBackground(filterFunction) {
+  var backgroundColor = image[0][0];
+
+  for (var i = 0; i < image.length; i++){
+
+  for (var j = 0; j < image[i].length; j++){
+    if (image[i][j] !== backgroundColor) {
+    var pixels = image[i][j];
+
+    var pixelArray = rgbStringToArray(pixels);
+    filterFunction(pixelArray);
+    var finalPixArray = rgbArrayToString(pixelArray);
+
+    image[i][j] = finalPixArray;
+  }
+}
+}
+}
 
 
 // TODO 6: Create the keepInBounds function
 
+function keepInBounds(num) {
+  if (num < 0) {
+    return 0;
+  } else if (num > 255) {
+    return 255;
+  } else {
+    return num;
+  }
+}
+
+
+
 
 // TODO 4: Create reddify filter function
 
+function reddify(pxArray) {
+  pxArray[RED] += 200;
+}
+
+// var testArray = [100, 100, 100];
+// reddify(testArray);
+// console.log("Test array: " + testArray); // Should show [200, 100, 100]
+
 
 // TODO 7 & 8: Create more filter functions
+
+function decreasedBlue(pxlArray) {
+  pxlArray[BLUE] -= 50;
+  keepInBounds(pxlArray[BLUE]);
+}
+
+function increaseGreenByBlue(pixArray) {
+  newGreenArray = pixArray[GREEN] += pixArray[BLUE];
+  keepInBounds(newGreenArray);
+}
 
 
 // CHALLENGE code goes below here
